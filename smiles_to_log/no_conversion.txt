@@ -1,0 +1,14 @@
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
+No 3D conversion worked: nan,  rdkit_failed  obabel_not_available  
