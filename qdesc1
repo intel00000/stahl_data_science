@@ -1,0 +1,170 @@
+#!/bin/bash
+
+#
+# SET VARIABLES
+#
+WD=`pwd`
+QUEUE="default"
+NPROC=8
+
+#
+# PARSE ARGUMENTS
+#
+while [ $# -gt 0 ]
+do
+    case "$1" in
+    (-*q) QUEUE="$2"; shift;;
+    (-*emailwhendone) PBSOPTS="-m ae";;
+    (-*charge) PBSOPTSS="-A $2" shift;;
+    (-*) echo "Unrecognized Option $1" 1>&2; exit 1;;
+    (*)  break;;
+    esac
+    shift
+done
+
+#
+# CHECK FOR JOB NAME
+#
+JOBNAME=$1
+if [ "$JOBNAME" = "" ]
+then
+  echo "Usage qdesc1 arguments jobname"
+  echo "Optional arguments:"
+  echo " -emailwhendone (email you when job completes, requires .forward file in home directory)"
+  echo " -charge [group,fund number] (charge to group and fund, please provide both)"
+  echo " "
+  echo "This script requires SDF file(s) and a mm_reference.com file for input"
+  echo "and performs step 1 of the 'SMILES to log' workflow"
+  exit 1
+fi
+
+if [ ! -f mm_reference.com ]
+then
+  echo "mm_reference.com file not found!"
+  exit 1
+fi
+
+#
+# SET PBS OPTIONS
+#
+OPTIONS="-q $QUEUE"
+PBSOPTS="-N $JOBNAME -l software=schrod -l nodes=1:ppn=$NPROC $PBSOPTS $PBSOPTSS"
+
+#
+# CREATE PBS INPUT FILE
+#
+TARGET=run.$$.sh
+
+cat >> $TARGET << EOF
+#!/bin/bash
+#PBS $PBSOPTS
+
+cd $WD
+
+export SCHRODINGER=/share/apps/schrodinger2022-4
+COM_REFERENCE=\${PWD}'/mm_reference.com'
+
+if [[ ! -d \${PWD}/output/ ]]; then
+mkdir \${PWD}/output/
+fi
+
+if [[ ! -d \${PWD}/output/clustered ]]; then
+mkdir \${PWD}/output/clustered
+fi
+
+for file in \$PWD/*.sdf; do
+echo \$file
+filename=\$(basename \$file) #file.sdf
+nopathnoext=\${filename%.*} #file
+
+echo "convert to .mae"
+echo " "
+\$SCHRODINGER/utilities/structconvert \${nopathnoext}.sdf \${nopathnoext}.mae
+
+mkdir \$nopathnoext
+mv \${nopathnoext}.mae \${nopathnoext}/\${nopathnoext}.mae
+
+cd \${nopathnoext}/
+
+echo "\${nopathnoext}.mae" > \${nopathnoext}.com
+echo "\${nopathnoext}_out.maegz" >> \${nopathnoext}.com
+cat \$COM_REFERENCE >> \${nopathnoext}.com
+
+\$SCHRODINGER/bmin -WAIT -HOST "localhost:1" \${nopathnoext}
+
+cd ../
+
+done
+
+WORKDIR=\$PWD
+
+if [[ ! -d \${PWD}/output/ ]]; then
+mkdir \${PWD}/output/
+fi
+
+if [[ ! -d \${PWD}/output/clustered ]]; then
+mkdir \${PWD}/output/clustered
+fi
+
+for PDB in \$WORKDIR/*/;do
+
+cd \$PDB
+
+for file in \$PDB/*.log;do
+filename=\$(basename \$file)
+nopathnoext=\${filename%.*}
+
+if [[ -f \${nopathnoext}.log ]];then
+lines=\`grep -A 1 "Final report; processing .tmp file:" \${nopathnoext}.log\`
+echo \${nopathnoext} has \${lines//[^0-9]/} conformers
+number=\${lines//[^0-9]/}
+
+if [ \$number -le 20 ]
+then
+echo 'converting '\${nopathnoext}'.maegz to .sdf'
+\$SCHRODINGER/utilities/structconvert \${nopathnoext}_out.maegz \${nopathnoext}_conf.sdf
+mv \${nopathnoext}_conf.sdf ../output/\${nopathnoext}_conf.sdf
+
+else
+\$SCHRODINGER/run conformer_cluster.py -j \${nopathnoext}_cluster -n 0  -r -rep -WAIT \${nopathnoext}_out.maegz #if you want a certain number of clusters, use "-n 5", 0 uses the Kelley Penalty minimum
+
+echo 'converting '\${nopathnoext}'.maegz to .sdf'
+\$SCHRODINGER/utilities/structconvert \${nopathnoext}_cluster_ligand1_representatives.maegz \${nopathnoext}_clust.sdf
+\$SCHRODINGER/utilities/structconvert \${nopathnoext}_out.maegz \${nopathnoext}_conf.sdf
+mv \${nopathnoext}_clust.sdf ../output/\${nopathnoext}_clust.sdf
+mv \${nopathnoext}_conf.sdf ../output/clustered/\${nopathnoext}_conf.sdf
+
+fi
+
+fi
+done
+
+cd \$WORKDIR
+
+done
+
+cd output/
+
+WORKDIR=\$PWD
+
+for i in *.sdf; do babel -isdf \$i -ogau \${i%.*}-.com -m; done
+
+for file in *.sdf;do
+filename=\$(basename \$file)
+nopathnoext=\${filename%.*}
+
+if [[ \$filename == *"clust"* ]];then
+if [[ ! -f \${nopathnoext}-2.com ]];then
+echo \$filename
+rm \${nopathnoext}.sdf
+rm \${nopathnoext}-1.com
+fi
+fi
+
+done
+
+EOF
+
+# Submit the input file to PBS and clean up
+qsub $OPTIONS $TARGET
+rm $TARGET
