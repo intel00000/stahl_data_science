@@ -1,0 +1,77 @@
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd10.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd11.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd12.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd13.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd1.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd2.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd3.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd4.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd5.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd6.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd7.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd8.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrd9.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrdz1.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrmd1.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrmd2.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrmd3.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrmd4.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrmd5.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrmd6.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrmd7.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrz1.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrz2.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+mv: cannot stat ‘pyrz3.mae’: No such file or directory
+FATAL -15: Could not check out a license for mmlibs version 6.0.
+==============================
+*** Open Babel Error  in OpenAndSetFormat
+  Cannot open *.sdf
+0 molecules converted
+1 errors 
