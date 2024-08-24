@@ -8,3 +8,4 @@ xlsxwriter
 rdkit
 openpyxl
 ipykernel
+ipywidgets
