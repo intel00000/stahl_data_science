@@ -5,11 +5,13 @@ dist/*
 logs/*
 
 # ignore python virtual environment
-venv/*
+.venv/
+venv/
 env/*
 Lib/*
 Scripts/*
 pyvenv.cfg
+GaussView/
 
 # exclude by extension
 *.pyc
