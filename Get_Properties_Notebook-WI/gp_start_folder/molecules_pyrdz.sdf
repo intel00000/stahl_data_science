@@ -1,5 +1,5 @@
 ./pyrdz1_conf-1.log
- OpenBabel08242407583D
+ OpenBabel08242408033D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP gen 6D pseudo=read symmetry=loose e
  29 30  0  0  0  0  0  0  0  0999 V2000
    -6.4513   -1.1230   -1.0933 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -70,7 +70,7 @@ g03
 
 $$$$
 ./pyrdz1_conf-2.log
- OpenBabel08242407583D
+ OpenBabel08242408033D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP gen 6D pseudo=read symmetry=loose e
  29 30  0  0  0  0  0  0  0  0999 V2000
     6.6541    0.2604   -1.1814 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -141,7 +141,7 @@ g03
 
 $$$$
 ./pyrdz1_conf-3.log
- OpenBabel08242407583D
+ OpenBabel08242408033D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP gen 6D pseudo=read symmetry=loose e
  29 30  0  0  0  0  0  0  0  0999 V2000
    -6.4609   -0.3917    1.4347 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -212,7 +212,7 @@ g03
 
 $$$$
 ./pyrdz1_conf-4.log
- OpenBabel08242407583D
+ OpenBabel08242408033D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP gen 6D pseudo=read symmetry=loose e
  29 30  0  0  0  0  0  0  0  0999 V2000
     6.6420    0.4732    1.0838 C   0  0  0  0  0  0  0  0  0  0  0  0
