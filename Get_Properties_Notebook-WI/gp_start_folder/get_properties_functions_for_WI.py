@@ -13,8 +13,8 @@ import goodvibes.io as io
 import goodvibes.pes as pes
 
 import dbstep.Dbstep as db
-#import matplotlib.pyplot as plt
-#from matplotlib import rcParams
+import matplotlib.pyplot as plt
+from matplotlib import rcParams
 
 homo_pattern = re.compile("Alpha  occ. eigenvalues")
 npa_pattern = re.compile("Summary of Natural Population Analysis:")

@@ -1,0 +1,13 @@
+pyrmd1_conf-1.log
+pyrmd1_conf-2.log
+pyrmd1_conf-3.log
+pyrmd1_conf-4.log
+pyrmd2_conf-1.log
+pyrmd2_conf-2.log
+pyrmd3_conf-1.log
+pyrmd3_conf-2.log
+pyrmd4_conf-1.log
+pyrmd5_conf-1.log
+pyrmd5_conf-2.log
+pyrmd6_conf-1.log
+pyrmd7_conf-1.log

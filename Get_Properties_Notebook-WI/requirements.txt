@@ -1,6 +1,10 @@
-pandas
 numpy
-scipy
+cclib
+morfeus-ml
+pandas
+dbstep
+matplotlib
+xlsxwriter
 rdkit
-pyyaml
 openpyxl
+ipykernel
