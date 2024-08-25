@@ -18,6 +18,9 @@ import dbstep.Dbstep as db
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
+import sys
+import subprocess
+
 homo_pattern = re.compile("Alpha  occ. eigenvalues")
 npa_pattern = re.compile("Summary of Natural Population Analysis:")
 nbo_os_pattern = re.compile("beta spin orbitals")
@@ -1090,49 +1093,85 @@ def get_SASA(dataframe): #uses morfeus to calculate solvent accessible surface a
     print("SASA function has completed")
     return pd.concat([dataframe, sasa_dataframe], axis=1)
 
-def get_goodvibes_e(dataframe, temp): #uses goodvibes to calculate energies for a given temperature
-    e_dataframe = pd.DataFrame(columns=[])
-    options = gv.GVOptions()
-    options.spc = 'link'
-    options.temperature = temp
+def parse_goodvibes_output(output):
+    # This function extracts the desired values from the goodvibes output
+    lines = output.splitlines()
+    data = {}
+    
+    # Find the index positions of the two lines of asterisks
+    start_index = None
+    end_index = None
+    
+    for i, line in enumerate(lines):
+        if re.match(r"^\s*\*{12,}\s*$", line):  # Matches lines with 6 or more asterisks
+            if start_index is None:
+                start_index = i
+            else:
+                end_index = i
+                break  # We only need the first two lines of asterisks
 
-    # create a text file for all output (required)
-    log = io.Logger("Goodvibes", 'output', False)
+    # Extract the relevant line between the two asterisk lines
+    if start_index is not None and end_index is not None and end_index > start_index:
+        for line in lines[start_index+1:end_index]:
+            if re.match(r"^\s*o", line):  # Matches lines starting with 'o' (with any amount of whitespace before)
+                parts = re.split(r'\s+', line.strip())  # Split the line by whitespace
+                data = {
+                    'E_spc (Hartree)': float(parts[2]),
+                    'ZPE(Hartree)': float(parts[4]),
+                    'H_spc(Hartree)': float(parts[5]),
+                    'T*S': float(parts[6]),
+                    'T*qh_S': float(parts[7]),
+                    'G(T)_spc(Hartree)': float(parts[8]),
+                    'qh_G(T)_spc(Hartree)': float(parts[9]),
+                    'T': 298.15  # Assuming the temperature is consistent
+                }
+                break
+
+    if not data:
+        # throw an error if the data is not found
+        raise ValueError("No data found in the GoodVibes output.")
+    
+    return data
+
+def get_goodvibes_e(dataframe, temp):
+    e_dataframe = pd.DataFrame(columns=[])
     
     for index, row in dataframe.iterrows():
         try:
             log_file = row['log_name']
-            file_data = io.getoutData(str(log_file) + ".log", options)
-            # Carry out the thermochemical analysis - auto-detect the vibrational scaling factor
-            options.freq_scale_factor = False # turns off default value of 1
-            level_of_theory = [file_data.functional + '/' + file_data.basis_set]
-            options.freq_scale_factor, options.mm_freq_scale_factor = gv.get_vib_scale_factor(level_of_theory, options, log)
-            bbe_val = thermo.calc_bbe(file_data, options)
             
-            properties = ['sp_energy', 'zpe', 'enthalpy', 'entropy', 'qh_entropy', 'gibbs_free_energy', 'qh_gibbs_free_energy']
-            vals = [getattr(bbe_val, k) for k in properties]
-
-            row_i = {'E_spc (Hartree)': vals[0],
-                     'ZPE(Hartree)': vals[1],
-                     'H_spc(Hartree)': vals[2],
-                     'T*S': vals[3] * options.temperature,
-                     'T*qh_S': vals[4] * options.temperature,
-                     'G(T)_spc(Hartree)': vals[5],
-                     'qh_G(T)_spc(Hartree)': vals[6],
-                     'T': options.temperature}
-
+            # Construct command-line arguments for GoodVibes
+            cmd_args = [
+                sys.executable, "-m",
+                "goodvibes", 
+                log_file,
+                "--spc", "link",
+                "-t", str(temp)
+            ]
+            
+            # Run the GoodVibes command and capture the output
+            result = subprocess.run(cmd_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            
+            # Parse the output
+            parsed_data = parse_goodvibes_output(result.stdout)
+            
+            # Append the parsed data to the DataFrame
+            e_dataframe = pd.concat([e_dataframe, pd.DataFrame([parsed_data])], ignore_index=True)
+        
+        except Exception as e:
+            print(f'****Unable to acquire goodvibes energies for: {row["log_name"]}.log with error: {e}')
+            row_i = {
+                'E_spc (Hartree)': "no data",
+                'ZPE(Hartree)': "no data",
+                'H_spc(Hartree)': "no data",
+                'T*S': "no data",
+                'T*qh_S': "no data",
+                'G(T)_spc(Hartree)': "no data",
+                'qh_G(T)_spc(Hartree)': "no data",
+                'T': "no data"
+            }
             e_dataframe = pd.concat([e_dataframe, pd.DataFrame([row_i])], ignore_index=True)
-        except:
-            print(f'****Unable to acquire goodvibes energies for: {row["log_name"]}.log')
-            row_i = {'E_spc (Hartree)': "no data",
-                     'ZPE(Hartree)': "no data",
-                     'H_spc(Hartree)': "no data",
-                     'T*S': "no data",
-                     'T*qh_S': "no data",
-                     'G(T)_spc(Hartree)': "no data",
-                     'qh_G(T)_spc(Hartree)': "no data",
-                     'T': "no data"}
-            e_dataframe = pd.concat([e_dataframe, pd.DataFrame([row_i])], ignore_index=True)
+
     print("Goodvibes function has completed")
     return pd.concat([dataframe, e_dataframe], axis=1)
 

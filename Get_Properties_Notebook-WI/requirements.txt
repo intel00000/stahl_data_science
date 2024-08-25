@@ -9,3 +9,4 @@ rdkit
 openpyxl
 ipykernel
 ipywidgets
+dftd3
