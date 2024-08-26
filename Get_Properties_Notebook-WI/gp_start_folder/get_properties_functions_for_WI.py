@@ -957,12 +957,12 @@ def get_planeangle(dataframe, planeangle_list): # a function to get the plane an
                     atomnum = re.findall(r'\d+', atomnum)[0] # extract only the number from the atom label
                     atomnum_list.append(str(atomnum))
                 planeanglenums_list.append(atomnum_list) # append atomnum_list for each plane angle to make a list of the form [['18', '16', '17', '50'], ['18', '16', '17', '50']]
-
+            
             planeangletitle_list = []
             for planeangle in planeangle_list:
                 planeangletitle = str(planeangle[0]) + "_" + str(planeangle[1]) + "_" + str(planeangle[2]) + "_&_" + str(planeangle[3]) + "_" + str(planeangle[4]) + "_" + str(planeangle[5])
                 planeangletitle_list.append(planeangletitle)
-
+            
             log_file = row['log_name'] #read file name from df
             streams, error = get_outstreams(log_file)
             if error != "":
@@ -1016,8 +1016,8 @@ def get_planeangle(dataframe, planeangle_list): # a function to get the plane an
                 entry = {'planeangle_' + str(planeangletitle_list[a]) + '(°)': planeanglesout[a]}
                 row_i.update(entry)
             planeangle_dataframe = pd.concat([planeangle_dataframe, pd.DataFrame([row_i])], ignore_index=True)
-        except:
-            print(f'****Unable to acquire plane angle for: {row["log_name"]}.log')
+        except Exception as e:
+            print(f'****Unable to acquire plane angle for: {row["log_name"]}.log with error: {e}')
             row_i = {}
             try:
                 for a in range(len(planeanglenums_list)):
@@ -1093,38 +1093,46 @@ def get_SASA(dataframe): #uses morfeus to calculate solvent accessible surface a
     print("SASA function has completed")
     return pd.concat([dataframe, sasa_dataframe], axis=1)
 
-def parse_goodvibes_output(output):
+def parse_goodvibes_output(output, temp=298.15):
     # This function extracts the desired values from the goodvibes output
     lines = output.splitlines()
     data = {}
+    column_mapping = {
+        "E_SPC": "E_spc (Hartree)",
+        "ZPE": "ZPE(Hartree)",
+        "H_SPC": "H_spc(Hartree)",
+        "T.S": "T*S",
+        "T.qh-S": "T*qh_S",
+        "G(T)_SPC": "G(T)_spc(Hartree)",
+        "qh-G(T)_SPC": "qh_G(T)_spc(Hartree)"
+    }
     
     # Find the index positions of the two lines of asterisks
     start_index = None
     end_index = None
-    
+    header_line = None
     for i, line in enumerate(lines):
-        if re.match(r"^\s*\*{12,}\s*$", line):  # Matches lines with 6 or more asterisks
+        if re.match(r"^\s*\*{12,}\s*$", line):  # Matches lines with 12 or more asterisks
             if start_index is None:
                 start_index = i
+                header_line = lines[i - 1]  # The header line is the one before the first line of asterisks
             else:
                 end_index = i
                 break  # We only need the first two lines of asterisks
 
+    # Parse the header line to determine the order of properties
+    if header_line:
+        headers = re.split(r'\s+', header_line.strip())[1:]  # get rid of the first column, which is the structure column
+    
     # Extract the relevant line between the two asterisk lines
     if start_index is not None and end_index is not None and end_index > start_index:
         for line in lines[start_index+1:end_index]:
             if re.match(r"^\s*o", line):  # Matches lines starting with 'o' (with any amount of whitespace before)
                 parts = re.split(r'\s+', line.strip())  # Split the line by whitespace
-                data = {
-                    'E_spc (Hartree)': float(parts[2]),
-                    'ZPE(Hartree)': float(parts[4]),
-                    'H_spc(Hartree)': float(parts[5]),
-                    'T*S': float(parts[6]),
-                    'T*qh_S': float(parts[7]),
-                    'G(T)_spc(Hartree)': float(parts[8]),
-                    'qh_G(T)_spc(Hartree)': float(parts[9]),
-                    'T': 298.15  # Assuming the temperature is consistent
-                }
+                for i, header in enumerate(headers):
+                    if header in column_mapping:
+                        data[column_mapping[header]] = float(parts[i + 2])  # Offset by 2 because parts[0] is 'o', parts[1] is the structure name
+                data['T'] = temp  # Assuming the temperature is consistent
                 break
 
     if not data:
@@ -1133,12 +1141,14 @@ def parse_goodvibes_output(output):
     
     return data
 
+import os
+
 def get_goodvibes_e(dataframe, temp):
     e_dataframe = pd.DataFrame(columns=[])
     
     for index, row in dataframe.iterrows():
         try:
-            log_file = row['log_name']
+            log_file = row['log_name'] + ".log"
             
             # Construct command-line arguments for GoodVibes
             cmd_args = [
@@ -1151,10 +1161,8 @@ def get_goodvibes_e(dataframe, temp):
             
             # Run the GoodVibes command and capture the output
             result = subprocess.run(cmd_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            
             # Parse the output
-            parsed_data = parse_goodvibes_output(result.stdout)
-            
+            parsed_data = parse_goodvibes_output(result.stdout, temp)
             # Append the parsed data to the DataFrame
             e_dataframe = pd.concat([e_dataframe, pd.DataFrame([parsed_data])], ignore_index=True)
         
@@ -1524,6 +1532,7 @@ def get_one_lp_energy(dataframe, a_list): #a function to get the NB orbitals for
             for atom in a_list: 
                 k = 0
                 atom_num = row[str(atom)]
+                atom_num = re.findall(r'\d+', atom_num)[0]
                 for j in range(nborbsstart,len(filecont)):
                     if str(atom_num) in " ".join(re.findall("([A-Z][a-z]? *[0-9]+)",filecont[j])).split() and ("LP" in filecont[j]):
                         orbital_section = re.search("[0-9]+\.[A-Z\*(0-9 ]+\)",filecont[j]).group(0) #type of MO
@@ -1562,8 +1571,8 @@ def get_one_lp_energy(dataframe, a_list): #a function to get the NB orbitals for
                 row_i.update(entry)
             print(row_i)
             nborbs_dataframe = pd.concat([nborbs_dataframe, pd.DataFrame([row_i])], ignore_index=True)
-        except:
-            print('****Unable to acquire NBO orbitals for:', row['log_name'], ".log")
+        except Exception as e:
+            print(f'****Unable to acquire NBO orbitals for: {row["log_name"]}.log with error: {e}')
             row_i = {}
             for a in range(0, len(a_list)):
                 entry = {'NBO_charge_'+str(a_list[a]): "no data"}
