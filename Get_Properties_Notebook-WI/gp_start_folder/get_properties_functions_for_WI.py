@@ -21,6 +21,16 @@ from matplotlib import rcParams
 import sys
 import subprocess
 
+# updated by Tom Tan at 2024.8.30
+# 1. change all pandas dataframe append to using pd.concat
+# see https://pandas.pydata.org/pandas-docs/version/1.4/whatsnew/v1.4.0.html#deprecated-dataframe-append-and-series-append
+# Pandas ditch dataframe1.append(dataframe2) method bacause every you call it, it create a brand new dataframe take up the same amount of memory.
+# Using pd.concat will append two dataframe "in-place" which take up less memory.
+# 2. move the get_one_lp_energy from notebook to here.
+# 3. update get_goodvibes_e with the newest version of goodvibes
+# Goodvibes change significantly, now they don't support calling it from a function anymore.
+# Instead what they do is to call goovibes in the command line with the log file and it outputs all the property.
+
 homo_pattern = re.compile("Alpha  occ. eigenvalues")
 npa_pattern = re.compile("Summary of Natural Population Analysis:")
 nbo_os_pattern = re.compile("beta spin orbitals")
