@@ -9,6 +9,5 @@ rdkit
 openpyxl
 ipykernel
 ipywidgets
-dftd3
 goodvibes
 tabulate
