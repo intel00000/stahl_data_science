@@ -27,9 +27,10 @@ import subprocess
 # Pandas ditch dataframe1.append(dataframe2) method bacause every you call it, it create a brand new dataframe take up the same amount of memory.
 # Using pd.concat will append two dataframe "in-place" which take up less memory.
 # 2. move the get_one_lp_energy from notebook to here.
-# 3. update get_goodvibes_e with the newest version of goodvibes
+# 3. update get_goodvibes_e to work with the newest version of goodvibes
 # Goodvibes change significantly, now they don't support calling it from a function anymore.
 # Instead what they do is to call goovibes in the command line with the log file and it outputs all the property.
+# 4. adapt the code to work when the cell in the atom map is atom_label + atom_number (e.g. C1, N1) instead of just number.
 
 homo_pattern = re.compile("Alpha  occ. eigenvalues")
 npa_pattern = re.compile("Summary of Natural Population Analysis:")
