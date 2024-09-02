@@ -1,0 +1,12 @@
+bokeh
+numpy
+plotly
+rdkit
+scipy
+Pillow
+seaborn
+openpyxl
+ipykernel
+ipywidgets
+matplotlib
+scikit-learn
