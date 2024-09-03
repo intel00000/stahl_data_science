@@ -1,8 +1,9 @@
 bokeh
-numpy
+numpy<2.0
 plotly
 rdkit
 scipy
+umap
 Pillow
 seaborn
 openpyxl

@@ -1,5 +1,5 @@
-pyrmd1_conf-1.log
- OpenBabel08302419193D
+./pyrmd1_conf-1.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  24 24  0  0  0  0  0  0  0  0999 V2000
     3.9835   -1.1945    0.0232 N   0  0  0  0  0  0  0  0  0  0  0  0
@@ -64,8 +64,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd1_conf-2.log
- OpenBabel08302419193D
+./pyrmd1_conf-2.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  24 24  0  0  0  0  0  0  0  0999 V2000
    -4.0880   -0.8235    0.2096 N   0  0  0  0  0  0  0  0  0  0  0  0
@@ -130,8 +130,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd1_conf-3.log
- OpenBabel08302419193D
+./pyrmd1_conf-3.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  24 24  0  0  0  0  0  0  0  0999 V2000
    -4.2243    0.3850    0.0282 N   0  0  0  0  0  0  0  0  0  0  0  0
@@ -196,8 +196,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd1_conf-4.log
- OpenBabel08302419193D
+./pyrmd1_conf-4.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  24 24  0  0  0  0  0  0  0  0999 V2000
     4.2199    0.0233    0.2022 N   0  0  0  0  0  0  0  0  0  0  0  0
@@ -262,8 +262,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd2_conf-1.log
- OpenBabel08302419193D
+./pyrmd2_conf-1.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  23 24  0  0  0  0  0  0  0  0999 V2000
    -2.6008    2.7119   -0.4653 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -327,8 +327,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd2_conf-2.log
- OpenBabel08302419193D
+./pyrmd2_conf-2.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  23 24  0  0  0  0  0  0  0  0999 V2000
    -2.6009   -2.7118    0.4648 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -392,8 +392,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd3_conf-1.log
- OpenBabel08302419193D
+./pyrmd3_conf-1.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  16 16  0  0  0  0  0  0  0  0999 V2000
    -3.0905   -0.0000    0.2203 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -442,8 +442,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd3_conf-2.log
- OpenBabel08302419193D
+./pyrmd3_conf-2.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  16 16  0  0  0  0  0  0  0  0999 V2000
    -3.1114   -0.2348    0.0001 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -492,8 +492,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd4_conf-1.log
- OpenBabel08302419193D
+./pyrmd4_conf-1.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  14 14  0  0  0  0  0  0  0  0999 V2000
    -2.6619   -1.0723   -0.0001 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -538,8 +538,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd5_conf-1.log
- OpenBabel08302419193D
+./pyrmd5_conf-1.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  25 26  0  0  0  0  0  0  0  0999 V2000
    -4.5520   -1.3428    0.0004 O   0  0  0  0  0  0  0  0  0  0  0  0
@@ -607,8 +607,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd5_conf-2.log
- OpenBabel08302419193D
+./pyrmd5_conf-2.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  25 26  0  0  0  0  0  0  0  0999 V2000
     4.7488    0.0803   -0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
@@ -676,8 +676,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd6_conf-1.log
- OpenBabel08302419193D
+./pyrmd6_conf-1.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  13 13  0  0  0  0  0  0  0  0999 V2000
    -3.2517   -0.0000    0.0180 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -720,8 +720,8 @@ B3LYP
 g03
 
 $$$$
-pyrmd7_conf-1.log
- OpenBabel08302419193D
+./pyrmd7_conf-1.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  17 17  0  0  0  0  0  0  0  0999 V2000
     2.9474    0.3813    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0

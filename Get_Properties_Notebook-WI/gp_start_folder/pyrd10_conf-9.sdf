@@ -1,5 +1,5 @@
-pyrd10_conf-9.log
- OpenBabel08302419193D
+./pyrd10_conf-9.log
+ OpenBabel09032406013D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  20 20  0  0  0  0  0  0  0  0999 V2000
    -3.0155   -0.3967    0.1386 Br  0  0  0  0  0  0  0  0  0  0  0  0
