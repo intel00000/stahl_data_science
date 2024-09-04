@@ -1,5 +1,5 @@
 ./pyrz1_conf-1.log
- OpenBabel09032406013D
+ OpenBabel09032423143D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  19 19  0  0  0  0  0  0  0  0999 V2000
    -1.7179    3.2052    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -55,7 +55,7 @@ g03
 
 $$$$
 ./pyrz1_conf-2.log
- OpenBabel09032406013D
+ OpenBabel09032423143D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  19 19  0  0  0  0  0  0  0  0999 V2000
     0.5139   -3.5817    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -111,7 +111,7 @@ g03
 
 $$$$
 ./pyrz2_conf-1.log
- OpenBabel09032406013D
+ OpenBabel09032423143D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  21 21  0  0  0  0  0  0  0  0999 V2000
     3.6740    0.1860   -0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -171,7 +171,7 @@ g03
 
 $$$$
 ./pyrz2_conf-2.log
- OpenBabel09032406013D
+ OpenBabel09032423143D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  21 21  0  0  0  0  0  0  0  0999 V2000
     3.6301   -0.6511    0.0115 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -231,7 +231,7 @@ g03
 
 $$$$
 ./pyrz3_conf-1.log
- OpenBabel09032406013D
+ OpenBabel09032423143D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  19 19  0  0  0  0  0  0  0  0999 V2000
    -3.9652   -0.2423    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -287,7 +287,7 @@ g03
 
 $$$$
 ./pyrz3_conf-2.log
- OpenBabel09032406013D
+ OpenBabel09032423143D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  19 19  0  0  0  0  0  0  0  0999 V2000
     3.9550   -0.3120   -0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
