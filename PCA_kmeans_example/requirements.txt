@@ -3,7 +3,7 @@ numpy<2.0
 plotly
 rdkit
 scipy
-umap
+umap-learn
 Pillow
 seaborn
 openpyxl
