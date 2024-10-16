@@ -19,6 +19,8 @@ GaussView/
 *.spec
 .micropico
 *.lck
+*.log
+*.com
 
 # ignore file start with ~, . or #
 ~*
