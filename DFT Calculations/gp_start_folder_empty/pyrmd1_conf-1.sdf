@@ -1,5 +1,5 @@
-./pyrmd1_conf-1.log
- OpenBabel10162413443D
+pyrmd1_conf-1.log
+ OpenBabel10172417273D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  19 20  0  0  0  0  0  0  0  0999 V2000
    -3.4158   -0.6531    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -35,12 +35,12 @@ Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
   8  7  1  0  0  0  0
   8 17  1  0  0  0  0
   9  8  2  0  0  0  0
- 10 19  1  0  0  0  0
  10  5  1  0  0  0  0
  10 11  2  0  0  0  0
  12  1  1  0  0  0  0
  14  1  1  0  0  0  0
  18  9  1  0  0  0  0
+ 19 10  1  0  0  0  0
 M  END
 >  <program>
 Gaussian 16, Revision C.01

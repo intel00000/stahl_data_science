@@ -1,5 +1,5 @@
-./pyrd15_conf-1.log
- OpenBabel10162413443D
+pyrd15_conf-1.log
+ OpenBabel10172417273D
 Gaussian share/apps/gaussian/g16/g16 # B3LYP/6-31G(d,p) symmetry=loose empirical
  14 14  0  0  0  0  0  0  0  0999 V2000
    -2.4107    0.0000    0.0076 C   0  0  0  0  0  0  0  0  0  0  0  0
