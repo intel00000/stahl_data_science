@@ -21,6 +21,9 @@ GaussView/
 *.lck
 *.log
 *.com
+*.mae
+*.maegz
+*.sdf
 
 # ignore file start with ~, . or #
 ~*
