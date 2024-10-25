@@ -24,6 +24,7 @@ GaussView/
 *.mae
 *.maegz
 *.sdf
+*.chk
 
 # ignore file start with ~, . or #
 ~*
