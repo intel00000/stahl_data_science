@@ -55,7 +55,7 @@ def show_file_differences(file1_path, file2_path):
 
 
 if __name__ == "__main__":
-    subfolder1 = "closed_shell_tom_old"
-    subfolder2 = "closed_shell_tom_new"
+    subfolder1 = "open_shell_tom_filtered_old"
+    subfolder2 = "open_shell_tom_filtered"
 
     compare_files_in_subfolders(subfolder1, subfolder2)
