@@ -1,3 +1,0 @@
-pyrdz1_conf-1_openshell.log
-pyrdz2_conf-1_openshell.log
-pyrdz3_conf-1_openshell.log

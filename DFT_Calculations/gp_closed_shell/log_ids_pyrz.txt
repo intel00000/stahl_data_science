@@ -1,7 +1,0 @@
-pyrz1_conf-1.log
-pyrz2_conf-1.log
-pyrz2_conf-2.log
-pyrz2_conf-3.log
-pyrz3_conf-1.log
-pyrz4_conf-1.log
-pyrz4_conf-2.log
