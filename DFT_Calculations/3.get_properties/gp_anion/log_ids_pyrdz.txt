@@ -1,0 +1,3 @@
+pyrdz1_conf-1_anion.log
+pyrdz2_conf-1_anion.log
+pyrdz3_conf-1_anion.log
