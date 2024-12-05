@@ -1,0 +1,14 @@
+cclib
+dbstep
+goodvibes
+ipykernel
+ipywidgets
+matplotlib
+morfeus-ml
+numpy
+openpyxl
+pandas
+pillow
+rdkit
+tabulate
+xlsxwriter
