@@ -1,0 +1,10 @@
+pyrmd1_conf-1_openshell.log
+pyrmd2_conf-1_openshell.log
+pyrmd3_conf-2_openshell.log
+pyrmd4_conf-1_openshell.log
+pyrmd5_conf-1_openshell.log
+pyrmd6_conf-1_openshell.log
+pyrmd7_conf-1_openshell.log
+pyrmd8_conf-1_openshell.log
+pyrmd9_conf-1_openshell.log
+pyrmd10_conf-1_openshell.log
