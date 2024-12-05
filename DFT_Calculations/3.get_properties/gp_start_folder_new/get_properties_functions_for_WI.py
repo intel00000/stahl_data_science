@@ -47,7 +47,7 @@ nborbs_pattern = "NATURAL BOND ORBITALS (Summary):" # "Natural Bond Orbitals (Su
 nborbs2_pattern = re.compile("NATURAL BOND ORBITALS (Summary):")
 nrt_pattern = re.compile("NATURAL RESONANCE THEORY ANALYSIS:")
 nav_pattern = re.compile("Natural Atomic Valencies, Electron Counts, and Charges:") # Natural Atomic Valencies keyword
-nborder_pattern = re.compile("Natural Bond Order:  (total/covalent/ionic)") # Natural Bond Order keyword
+nborder_pattern = re.compile("Natural Bond Order:") # Natural Bond Order keyword
 
 def get_geom(streams): #extracts the geometry from the compressed stream
     geom = []
@@ -1604,19 +1604,19 @@ def get_natural_atomic_valencies(dataframe, a_list):
     for index, row in dataframe.iterrows():
         try:
             # mappings between a_list and actual labels in the row
-            a_list_to_row = {atom: row[atom] for atom in a_list}
             row_to_a_list = {row[atom]: atom for atom in a_list}
-            # print(f"Mapped Atoms: {from_a_list_to_row}")
-            # it look something like Mapped Atoms: {'C1': 'C1', 'C2': 'C2'}, the key is from the a_list and the value is the atom number from the row
-            # we will the atom number from the ROW CELL to find the corresponding atom in the log file
+            # print(f"Mapped Atoms: {row_to_a_list}")
+            # print look something like Mapped Atoms: {'C1': 'C1', 'C2': 'C2'}
+            # the key is from the each row cell and the value is the input a_list(reassigned atom label)
+            # we will use atom number from the ROW CELL to find the corresponding atom in the log file
 
             log_file = row["log_name"]  # Load log file content
             filecont, error = get_filecont(log_file)
             if error:
                 print(error)
-                valency_dataframe = valency_dataframe.append(
-                    {f"Natural_Valency_{atom}": "no data" for atom in a_list},
-                    ignore_index=True,
+                row_i = {f"Natural_Valency_{atom}": "no data" for atom in a_list}
+                valency_dataframe = pd.concat(
+                    [valency_dataframe, pd.DataFrame([row_i])], ignore_index=True
                 )
                 continue
 
@@ -1661,8 +1661,7 @@ def get_natural_atomic_valencies(dataframe, a_list):
                             headers_first[i + 1]
                         ] = valency
 
-            exclude_properties = ["Valency", "ElectronCount",]  # a list of properties we don't want to add to the dataframe
-
+            exclude_properties = ["Valency", "ElectronCount"]  # a list of properties we don't want to add to the dataframe
             # Add extracted values to the DataFrame
             row_i = {}
             for atom in a_list:
@@ -1688,3 +1687,158 @@ def get_natural_atomic_valencies(dataframe, a_list):
 
     print(f"Natural Atomic Valencies function has completed for {a_list}")
     return pd.concat([dataframe, valency_dataframe], axis=1)
+
+
+def get_natural_bond_order(dataframe, bond_list):
+    """
+    Extracts Natural Bond Order (total/covalent/ionic) for specified bonds from a Gaussian log file.
+
+    Parameters:
+        dataframe (pd.DataFrame): DataFrame containing 'log_name' and atom mappings.
+        bond_list (list of list): List of bonds to extract (e.g., [["C1", "C2"]]).
+
+    Returns:
+        pd.DataFrame: Updated DataFrame with extracted bond orders.
+    """
+    bond_order_dataframe = pd.DataFrame(columns=[])
+
+    for _, row in dataframe.iterrows():
+        try:
+            # Map atom labels from the row to the bond list
+            bond_mappings = [
+                [row[bond[0]], row[bond[1]]]
+                for bond in bond_list
+                if bond[0] in row and bond[1] in row
+            ]
+            # if the list is empty, raise an error
+            if not bond_mappings:
+                print(f"****Invalid bond lists, cannot find atoms in the corresponding row.")
+                raise ValueError("No valid atom mappings found in the row.")
+
+            filecont, error = get_filecont(row["log_name"])  # Load log file content
+            if error:
+                print(error)
+                row_data = {f"{bond[0]}_{bond[1]}_Bond_Order": "no data" for bond in bond_list}
+                bond_order_dataframe = pd.concat([bond_order_dataframe, pd.DataFrame([row_data])], ignore_index=True)
+                continue
+
+            # Locate the section with Natural Bond Order using regex
+            start_line = None
+            for i, line in enumerate(filecont):
+                if nborder_pattern.search(line):
+                    start_line = i + 2  # Data starts three lines below the header
+                    break
+            if start_line is None:
+                print(f"****No Natural Bond Order section found in: {row['log_name']}.log")
+                row_data = {f"{bond[0]}_{bond[1]}_Bond_Order": "no data" for bond in bond_list}
+                bond_order_dataframe = pd.concat([bond_order_dataframe, pd.DataFrame([row_data])], ignore_index=True)
+                continue
+
+            # Parse the section until two consecutive newlines
+            section_data = []
+            blank_line_count = 0
+            for line in filecont[start_line:]:
+                if line.strip() == "":
+                    blank_line_count += 1
+                    if blank_line_count == 2:
+                        break
+                else:
+                    blank_line_count = 0
+                section_data.append(line)
+
+            # Split section data by atom title lines
+            sections = []
+            current_section = []
+            for line in section_data:
+                if line.strip().startswith("Atom"):
+                    if current_section:
+                        sections.append(current_section)
+                    current_section = [line]
+                else:
+                    current_section.append(line)
+            if current_section:
+                sections.append(current_section)
+
+            # Parse each section
+            bond_orders = {}
+            for section in sections:
+                title_line = section[0].strip()
+                # print(f"****Title Line: {title_line}")
+                atom_indices = re.split(r"\s{2,}", title_line)[
+                    1:
+                ]  # Extract atom indices
+                # print(f"****Atom Indices: {atom_indices}")
+
+                for i in range(2, len(section), 4):  # Process 4 lines at a time
+                    # print(f"****Processing lines {i} to {i + 2}")
+                    if i + 2 >= len(section):
+                        break
+                    total_line = section[i].strip()
+                    covalent_line = section[i + 1].strip()
+                    ionic_line = section[i + 2].strip()
+
+                    atom_parts = re.split(r"\s+", total_line)
+                    atom_label = (
+                        atom_parts[0].strip().replace(".", "")
+                    )  # we will only use the number part of the atom label
+                    # print(f"****Atom Label: {atom_label}")
+
+                    total_values = atom_parts[3:]  # Skip atom label parts
+                    covalent_values = re.split(r"\s+", covalent_line.strip())[1:]
+                    ionic_values = re.split(r"\s+", ionic_line.strip())[1:]
+
+                    if atom_label in bond_orders:
+                        # print(f"****Updating existing atom label: {atom_label}")
+                        bond_orders[atom_label].update(
+                            {
+                                atom_indices[j]: {
+                                    "t": total_values[j],
+                                    "c": covalent_values[j],
+                                    "i": ionic_values[j],
+                                }
+                                for j in range(len(atom_indices))
+                            }
+                        )
+                    else:
+                        bond_orders[atom_label] = {
+                            atom_indices[j]: {
+                                "t": total_values[j],
+                                "c": covalent_values[j],
+                                "i": ionic_values[j],
+                            }
+                            for j in range(len(atom_indices))
+                        }
+
+            # Extract bond orders for the specified bonds
+            row_data = {}
+            for index, bond in enumerate(bond_mappings):
+                atom1, atom2 = bond
+                # find the actual atom numbers from the row, eg, C1 -> 1
+                atom1_index = str(re.findall(r"\d+", atom1)[0])
+                atom2_index = str(re.findall(r"\d+", atom2)[0])
+                # print(f"****Processing bond {atom1} - {atom2}, indices: {atom1_index}, {atom2_index}")
+                bond_order_data = bond_orders.get(atom1_index, {}).get(atom2_index, None)
+                # print(f"****Bond Order Data: {bond_order_data}")
+                if bond_order_data:
+                    row_data[f"{bond_list[index][0]}_{bond_list[index][1]}_bond_order_total"] = bond_order_data["t"]
+                    row_data[f"{bond_list[index][0]}_{bond_list[index][1]}_bond_order_covalent"] = bond_order_data["c"]
+                    row_data[f"{bond_list[index][0]}_{bond_list[index][1]}_bond_order_ionic"] = bond_order_data["i"]
+                else:
+                    row_data[f"{bond_list[index][0]}_{bond_list[index][1]}_bond_order_total"] = "no data"
+                    row_data[f"{bond_list[index][0]}_{bond_list[index][1]}_bond_order_covalent"] = "no data"
+                    row_data[f"{bond_list[index][0]}_{bond_list[index][1]}_bond_order_ionic"] = "no data"
+            bond_order_dataframe = pd.concat(
+                [bond_order_dataframe, pd.DataFrame([row_data])], ignore_index=True
+            )
+
+        except Exception as e:
+            print(f"****Error processing log file {row['log_name']}: {e}")
+            row_data = {
+                f"Bond_Order_{bond[0]}_{bond[1]}": "no data" for bond in bond_list
+            }
+            bond_order_dataframe = pd.concat(
+                [bond_order_dataframe, pd.DataFrame([row_data])], ignore_index=True
+            )
+
+    print(f"Natural Bond Order function has completed for {bond_list}")
+    return pd.concat([dataframe, bond_order_dataframe], axis=1)
