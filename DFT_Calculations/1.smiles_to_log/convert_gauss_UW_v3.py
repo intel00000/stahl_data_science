@@ -112,7 +112,7 @@ def convert_gaussin(choice,dir):
     "2":["   For Amide Project:\n    Opt+freq at " + method["opt"].split(" ")[1] + "\n    then Single point at " + method["sp1"].replace("# ","") + "\n    then Single point at " + method["sp2"].replace("# ","") + "\n\n",["opt","sp1","sp2"]],
     "3":["   For the complexes:\n    Single point at " + method["sp1"].replace("# ","") + "\n    then Single point at " + method["sp2"].replace("# ","") + "\n\n",["sp1","sp2"]],
     "4":["   For the ligands:\n    Single point at " + method["splig"].replace("# ","") + "\n\n",["splig"]],
-    "5":["   For Chlorination Project:\n    Opt+freq at " + method["opt"].split(" ")[1] + "\n    then Single point at " + method["sp3"].replace("# ","") + "\n    then Single point at " + method["sp2"].replace("# ","") + "\n\n",["opt","sp3","sp2"]],
+    "5":["   For Chlorination Project:\n    Opt+freq at " + method["opt"].split(" ")[1] + "\n    then Single point at " + method["sp3"].replace("# ","") + " (WITH NRT)" + "\n    then Single point at " + method["sp2"].replace("# ","") + "\n\n",["opt","sp3","sp2"]],
     }
     
     text = "by default, ECP is selected for fourth and higher row elements\n" 
