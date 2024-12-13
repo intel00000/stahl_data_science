@@ -14,6 +14,9 @@ import argparse
 
 
 def main(original_folder, new_folder, file_extension):
+    print(
+        f"Converting files in {original_folder} from Tom to Leah naming convention, saving to {new_folder}."
+    )
     # Read in the mapping from smiles_with_mapping.xlsx
     df = pd.read_excel("smiles_with_mapping.xlsx", header=0)
     df = df[["id", "mapping"]]
