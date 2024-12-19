@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML
+ CreationProgram="ChemDraw 22.0.0.22"
+ Name="pyridazine.cdxml"
+ BoundingBox="282.64 219.88 310.85 252.61"
+ WindowPosition="0 0"
+ WindowSize="0 0"
+ FractionalWidths="yes"
+ InterpretChemically="yes"
+ ShowAtomQuery="yes"
+ ShowAtomStereo="no"
+ ShowAtomEnhancedStereo="yes"
+ ShowAtomNumber="no"
+ ShowResidueID="no"
+ ShowBondQuery="yes"
+ ShowBondRxn="yes"
+ ShowBondStereo="no"
+ ShowTerminalCarbonLabels="no"
+ ShowNonTerminalCarbonLabels="no"
+ HideImplicitHydrogens="no"
+ LabelFont="58"
+ LabelSize="10"
+ LabelFace="96"
+ CaptionFont="58"
+ CaptionSize="10"
+ HashSpacing="2.50"
+ MarginWidth="1.60"
+ LineWidth="0.60"
+ BoldWidth="2"
+ BondLength="14.40"
+ BondSpacing="18"
+ ChainAngle="120"
+ LabelJustification="Auto"
+ CaptionJustification="Left"
+ AminoAcidTermini="HOH"
+ ShowSequenceTermini="yes"
+ ShowSequenceBonds="yes"
+ ShowSequenceUnlinkedBranches="no"
+ ResidueWrapCount="40"
+ ResidueBlockCount="10"
+ PrintMargins="36 36 36 36"
+ MacPrintInfo="0003000000480048000000000300024CFFF4FFF4030C02580367052803FC0002000000480048000000000300024C000100000064000000010001010100000001270F000100010000000000000000000000000002001901900000000000400000000000000000000100000000000000000000000000000000"
+ ChemPropName=""
+ ChemPropFormula="Chemical Formula: "
+ ChemPropExactMass="Exact Mass: "
+ ChemPropMolWt="Molecular Weight: "
+ ChemPropMOverZ="m/z: "
+ ChemPropAnalysis="Elemental Analysis: "
+ ChemPropBoilingPt="Boiling Point: "
+ ChemPropMeltingPt="Melting Point: "
+ ChemPropCritTemp="Critical Temp: "
+ ChemPropCritPres="Critical Pres: "
+ ChemPropCritVol="Critical Vol: "
+ ChemPropGibbs="Gibbs Energy: "
+ ChemPropLogP="Log P: "
+ ChemPropMR="MR: "
+ ChemPropHenry="Henry&apos;s Law: "
+ ChemPropEForm="Heat of Form: "
+ ChemProptPSA="tPSA: "
+ ChemPropID=""
+ ChemPropFragmentLabel=""
+ color="0"
+ bgcolor="1"
+ RxnAutonumberStart="1"
+ RxnAutonumberConditions="no"
+ RxnAutonumberStyle="Roman"
+ RxnAutonumberFormat="(#)"
+><colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+<color r="0.4902" g="0" b="0"/>
+</colortable><fonttable>
+<font id="58" charset="x-mac-roman" name="Arial"/>
+<font id="60" charset="x-mac-roman" name="Arial Bold"/>
+<font id="227" charset="x-mac-roman" name="Helvetica Bold"/>
+</fonttable><page
+ id="2092958638"
+ BoundingBox="0 0 540 720"
+ HeaderPosition="36"
+ FooterPosition="36"
+ PrintTrimMarks="yes"
+ HeightPages="1"
+ WidthPages="1"
+><fragment
+ id="2092958624"
+ BoundingBox="282.64 219.88 310.85 252.61"
+ Z="14"
+><n
+ id="2092958625"
+ p="282.95 241.83"
+ Z="15"
+ AS="N"
+/><n
+ id="2092958626"
+ p="282.95 227.43"
+ Z="16"
+ AS="N"
+/><n
+ id="2092958627"
+ p="295.42 249.03"
+ Z="18"
+ color="10"
+ Element="7"
+ NumHydrogens="0"
+ NeedsClean="yes"
+ AS="N"
+><t
+ p="291.81 252.61"
+ BoundingBox="292.55 245.45 298.23 252.61"
+ color="10"
+ LabelJustification="Left"
+><s font="60" size="10" color="10" face="97">N</s></t></n><n
+ id="2092958628"
+ p="307.89 241.83"
+ Z="19"
+ color="10"
+ Element="7"
+ NumHydrogens="0"
+ NeedsClean="yes"
+ AS="N"
+><t
+ p="304.30 245.41"
+ BoundingBox="305.03 238.25 310.85 245.41"
+ color="10"
+ LabelJustification="Left"
+><s font="227" size="9.95" color="10" face="97">N</s></t></n><n
+ id="2092958629"
+ p="307.89 227.43"
+ Z="20"
+ AS="N"
+/><n
+ id="2092958630"
+ p="295.42 220.23"
+ Z="21"
+ AS="N"
+/><b
+ id="2092958631"
+ Z="17"
+ B="2092958625"
+ E="2092958626"
+ Order="2"
+ BS="N"
+ BondCircularOrdering="0 2092958632 2092958636 0"
+/><b
+ id="2092958632"
+ Z="22"
+ B="2092958625"
+ E="2092958627"
+ BS="N"
+/><b
+ id="2092958633"
+ Z="23"
+ B="2092958627"
+ E="2092958628"
+ Order="2"
+ BS="N"
+ BondCircularOrdering="2092958632 0 0 2092958634"
+/><b
+ id="2092958634"
+ Z="24"
+ B="2092958628"
+ E="2092958629"
+ BS="N"
+/><b
+ id="2092958635"
+ Z="25"
+ B="2092958629"
+ E="2092958630"
+ Order="2"
+ BS="N"
+ BondCircularOrdering="2092958634 0 0 2092958636"
+/><b
+ id="2092958636"
+ Z="26"
+ B="2092958630"
+ E="2092958626"
+ BS="N"
+/></fragment><annotation
+ Keyword="Fragment Label"
+ Content="[III]"
+/><annotation
+ Keyword="GUID"
+ Content="528416ED-B954-4BF2-89A8-C57FF7F47F83"
+/><annotation
+ Keyword="Name"
+ Content="dimethyl methylphosphonate"
+/><annotation
+ Keyword="Type"
+ Content="stnd."
+/></page></CDXML>
