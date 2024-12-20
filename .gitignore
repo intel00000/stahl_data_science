@@ -26,6 +26,7 @@ GaussView/
 *.sdf
 *.chk
 *.cdxml
+*.png
 
 # ignore file start with ~, . or #
 ~*
