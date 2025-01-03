@@ -1,6 +1,0 @@
-numpy
-openpyxl
-pandas
-pyyaml
-rdkit
-scipy
