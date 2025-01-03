@@ -1,32 +1,37 @@
-# ignore all file in folder Source Code
+# Ignore all files in specific directories
 Source Code/*
 build/*
 dist/*
 logs/*
 
-# ignore python virtual environment
+# Ignore Python virtual environments
 .venv/
 venv/
-env/*
-Lib/*
-Scripts/*
-pyvenv.cfg
+env/
+Lib/
+Scripts/
+
+# Ignore specific tools and applications
 GaussView/
 
-# exclude by extension
-*.pyc
-*.pyo
-*.spec
-.micropico
-*.lck
-*.log
-*.com
-*.mae
-*.maegz
-*.sdf
+# Exclude files by extension
 *.chk
 *.cdxml
+*.com
+*.lck
+*.log
+*.mae
+*.maegz
+*.micropico
+*.pyo
+*.pyc
 *.png
+*.sdf
+*.spec
+*.xlsx
+pyvenv.cfg
 
-# ignore file start with ~, . or #
+# Ignore temporary and system files
 ~*
+.*
+#*
