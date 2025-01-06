@@ -1,13 +1,13 @@
 pyrd1_conf-1_openshell.log
 pyrd2_conf-1_openshell.log
 pyrd3_conf-1_openshell.log
-pyrd4_conf-1_openshell.log
+pyrd4_conf-1_openshell_resubmit.log
 pyrd5_conf-1_openshell.log
-pyrd6_conf-1_openshell.log
+pyrd6_conf-1_openshell_resubmit.log
 pyrd7_conf-1_openshell.log
 pyrd8_conf-1_openshell.log
-pyrd9_conf-1_openshell.log
-pyrd10_conf-1_openshell.log
+pyrd9_conf-2_openshell.log
+pyrd10_conf-2_openshell.log
 pyrd11_conf-1_openshell.log
 pyrd12_conf-1_openshell.log
 pyrd13_conf-1_openshell.log

@@ -6,8 +6,8 @@ pyrd5_conf-1_anion.log
 pyrd6_conf-1_anion.log
 pyrd7_conf-1_anion.log
 pyrd8_conf-1_anion.log
-pyrd9_conf-1_anion.log
-pyrd10_conf-1_anion.log
+pyrd9_conf-2_anion.log
+pyrd10_conf-2_anion.log
 pyrd11_conf-1_anion.log
 pyrd12_conf-1_anion.log
 pyrd13_conf-1_anion.log
