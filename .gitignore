@@ -1,0 +1,36 @@
+# Ignore all files in specific directories
+Source Code/*
+build/*
+dist/*
+logs/*
+
+# Ignore Python virtual environments
+.venv/
+venv/
+env/
+Lib/
+Scripts/
+
+# Ignore specific tools and applications
+GaussView/
+
+# Exclude files by extension
+*.chk
+*.cdxml
+*.com
+*.lck
+*.log
+*.mae
+*.maegz
+*.micropico
+*.pyo
+*.pyc
+*.png
+*.sdf
+*.spec
+*.xlsx
+pyvenv.cfg
+
+# Ignore temporary and system files
+~*
+#*
