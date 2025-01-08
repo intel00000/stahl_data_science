@@ -30,6 +30,7 @@ GaussView/
 *.spec
 *.xlsx
 pyvenv.cfg
+.DS_Store
 
 # Ignore temporary and system files
 ~*
