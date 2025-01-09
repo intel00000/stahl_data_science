@@ -18,11 +18,13 @@ GaussView/
 *.chk
 *.cdxml
 *.com
+*.html
 *.lck
 *.log
 *.mae
 *.maegz
 *.micropico
+*.pkl
 *.pyo
 *.pyc
 *.png
