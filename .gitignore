@@ -1,8 +1,8 @@
 # Ignore all files in specific directories
-Source Code/*
-build/*
-dist/*
-logs/*
+Source Code/
+build/
+dist/
+logs/
 
 # Ignore Python virtual environments
 .venv/

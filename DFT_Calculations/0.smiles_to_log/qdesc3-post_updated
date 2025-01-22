@@ -1,0 +1,116 @@
+#!/bin/bash
+
+#
+# SET VARIABLES
+#
+WD=`pwd`
+
+#
+# PARSE ARGUMENTS
+#
+while [ $# -gt 0 ]
+do
+    case "$1" in
+    (-*normalt) NORMALT="$2"; shift;;
+    (-*getmail) SLURMOPTS="--mail-type=ALL";;
+    (-*) echo "Unrecognized Option $1" 1>&2; exit 1;;
+    (*)  break;;
+    esac
+    shift
+done
+
+#
+# CHECK FOR JOB NAME
+#
+JOBNAME=$1
+if [ "$JOBNAME" = "" ]
+then
+  echo "Usage qdesc3-post arguments jobname"
+  echo "Required arguments:"
+  echo " -normalt [number]"
+  echo " Opt + Freq = 2"
+  echo " Each linked job = 1"
+  echo " Typical value is 4"
+  echo "Optional arguments:"
+  echo " -getmail (get email to your wisc.edu inbox when job begins and ends)"
+  echo " "
+  echo "This script performs the post-processing checks that are"
+  echo "step 3 of the 'SMILES to log' workflow"
+  exit 1
+fi
+
+if [ "$NORMALT" = "" ]
+then
+  echo "Please set the TOTAL number of 'Normal termination' expected to appear with the -normalt argument."
+  exit 1
+fi
+
+#
+# CREATE SLURM INPUT FILE
+#
+TARGET=run.$$.sh
+
+cat >> $TARGET << EOF
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --job-name="$JOBNAME"
+#SBATCH --error=/dev/null
+#SBATCH --output=/dev/null
+
+cd $WD
+export SCRDIR=/scratch/\$SLURM_JOBID
+mkdir \$SCRDIR
+
+sed 's/NUMBERHEREPLEASE/$NORMALT/' /share/apps/schrodinger2022-4/log_check_for_processing_v1_1_0.py > \$SCRDIR/log_check_for_processing_v1_1_0.py
+
+WORKDIR=\$PWD
+
+rm fort.7
+find . -type d -empty -delete
+
+if [[ ! -d \${PWD}/chk/ ]]; then
+mkdir \${PWD}/chk/
+fi
+
+if [[ ! -d \${PWD}/resubmit/ ]]; then
+mkdir \${PWD}/resubmit/
+fi
+
+if [[ ! -d \${PWD}/logs/ ]]; then
+mkdir \${PWD}/logs/
+fi
+
+if [[ ! -d \${PWD}/term_error/ ]]; then
+mkdir \${PWD}/term_error/
+fi
+
+if [[ ! -d \${PWD}/imag/ ]]; then
+mkdir \${PWD}/imag/
+fi
+
+for file in *.com;do
+filename=\$(basename \$file)
+nopathnoext=\${filename%.*}
+
+if [[ -f \${nopathnoext}.log ]];then
+mv \${nopathnoext}.log logs/\${nopathnoext}.log
+mv \${nopathnoext}.chk chk/\${nopathnoext}.chk
+mv \${nopathnoext}.fchk chk/\${nopathnoext}.fchk
+else
+
+mv \${nopathnoext}.com resubmit/\${nopathnoext}.com
+fi
+
+done
+
+cd logs/
+taskset 1 python3 \$SCRDIR/log_check_for_processing_v1_1_0.py
+
+rm -rf \$SCRDIR
+
+EOF
+
+# Submit the input file to SLURM and clean up
+sbatch $SLURMOPTS $TARGET
+rm $TARGET
