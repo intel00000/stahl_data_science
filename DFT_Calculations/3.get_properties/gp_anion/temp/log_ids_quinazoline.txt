@@ -1,0 +1,8 @@
+quinazoline001_conf-8_anion.log
+quinazoline002_conf-2_anion.log
+quinazoline003_conf-1_anion.log
+quinazoline004_conf-1_anion.log
+quinazoline005_conf-1_anion.log
+quinazoline006_conf-1_anion.log
+quinazoline007_conf-1_anion.log
+quinazoline008_conf-1_anion.log

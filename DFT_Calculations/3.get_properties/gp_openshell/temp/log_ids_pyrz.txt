@@ -1,4 +1,0 @@
-pyrz1_conf-1_openshell.log
-pyrz2_conf-1_openshell.log
-pyrz3_conf-1_openshell.log
-pyrz4_conf-1_openshell.log

@@ -1,0 +1,2 @@
+pyrazolopyrimidine001_conf-1.log
+pyrazolopyrimidine001_conf-2.log

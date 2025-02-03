@@ -1,0 +1,8 @@
+pyridazine001_conf-2_anion.log
+pyridazine002_conf-1_anion.log
+pyridazine003_conf-1_anion.log
+pyridazine004_conf-1_anion.log
+pyridazine005_conf-1_anion.log
+pyridazine006_conf-1_anion.log
+pyridazine007_conf-1_anion.log
+pyridazine008_conf-1_anion.log

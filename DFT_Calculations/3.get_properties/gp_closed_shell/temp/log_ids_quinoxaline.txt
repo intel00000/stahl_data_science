@@ -1,0 +1,11 @@
+quinoxaline001_conf-1.log
+quinoxaline002_conf-1.log
+quinoxaline002_conf-10.log
+quinoxaline002_conf-2.log
+quinoxaline002_conf-3.log
+quinoxaline002_conf-4.log
+quinoxaline002_conf-5.log
+quinoxaline002_conf-6.log
+quinoxaline002_conf-7.log
+quinoxaline002_conf-8.log
+quinoxaline002_conf-9.log

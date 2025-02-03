@@ -1,0 +1,7 @@
+pyrazine001_conf-1_anion.log
+pyrazine002_conf-1_anion.log
+pyrazine003_conf-1_anion.log
+pyrazine004_conf-2_anion.log
+pyrazine005_conf-1_anion.log
+pyrazine006_conf-1_anion.log
+pyrazine007_conf-1_anion.log
