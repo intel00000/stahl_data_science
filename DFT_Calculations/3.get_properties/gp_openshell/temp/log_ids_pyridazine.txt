@@ -1,0 +1,8 @@
+pyridazine001_conf-2_openshell.log
+pyridazine002_conf-1_openshell.log
+pyridazine003_conf-1_openshell.log
+pyridazine004_conf-1_openshell.log
+pyridazine005_conf-1_openshell.log
+pyridazine006_conf-1_openshell.log
+pyridazine007_conf-1_openshell.log
+pyridazine008_conf-1_openshell.log

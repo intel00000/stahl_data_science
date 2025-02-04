@@ -1,5 +1,0 @@
-pyrdz1_conf-1.log
-pyrdz2_conf-1.log
-pyrdz3_conf-1.log
-pyrdz3_conf-2.log
-pyrdz3_conf-3.log

@@ -1,0 +1,8 @@
+quinazoline001_conf-8_openshell.log
+quinazoline002_conf-2_openshell.log
+quinazoline003_conf-1_openshell.log
+quinazoline004_conf-1_openshell.log
+quinazoline005_conf-1_openshell.log
+quinazoline006_conf-1_openshell.log
+quinazoline007_conf-1_openshell.log
+quinazoline008_conf-1_openshell.log

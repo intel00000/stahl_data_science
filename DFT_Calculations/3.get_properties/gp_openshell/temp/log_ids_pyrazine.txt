@@ -1,0 +1,7 @@
+pyrazine001_conf-1_openshell.log
+pyrazine002_conf-1_openshell.log
+pyrazine003_conf-1_openshell.log
+pyrazine004_conf-2_openshell.log
+pyrazine005_conf-1_openshell.log
+pyrazine006_conf-1_openshell.log
+pyrazine007_conf-1_openshell.log
