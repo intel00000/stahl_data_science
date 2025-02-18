@@ -46,6 +46,23 @@ def load_structures_from_cdxml(root_dir: str) -> dict:
     return structures
 
 
+def plot_common_structures(common_structure_list):
+    # Prepare the list of molecules and corresponding legends (for display under each molecule)
+    mols = list(common_structure_list.values())
+    legends = list(common_structure_list.keys())
+    # Generate a grid image with a fixed number of columns (5 columns)
+    img = Chem.Draw.MolsToGridImage(
+        mols, molsPerRow=5, subImgSize=(150, 150), legends=legends
+    )
+    return img
+
+
+def format_dict_print(data):
+    max_key_length = max(len(key) for key in data)
+    for key, value in data.items():
+        print(f'"{key}": {" " * (max_key_length - len(key))}{value}')
+
+
 def load_files_grouped_by_prefix(
     file_type: str, root_dir: str, available_prefixes: list
 ) -> dict:
@@ -698,7 +715,6 @@ def draw_grid_image(
             plt.savefig(
                 temp_folder + os.sep + save_image_prefix + item_suffix + f"_{i + 1}.png"
             )
-            plt.close()
     else:
         plt.figure(figsize=(num_Cols, num_rows), layout="constrained", dpi=600)
         for i in range(num_images):
@@ -712,7 +728,7 @@ def draw_grid_image(
         plt.savefig(
             temp_folder + os.sep + save_image_prefix + item_suffix + ".png"
         )  # save the grid image to temp folder
-        plt.close()
+    plt.close()
 
 
 def search_for_substructure_close_shell(
@@ -1221,4 +1237,245 @@ def search_for_substructure_openshell(
     prelim_df = pd.DataFrame(atoms)
     prelim_df.insert(0, column="log_name", value=list_of_files)
 
+    return prelim_df
+
+
+def generate_custom_structural_descriptors(
+    prefixes: list,
+    all_compounds_list: dict,
+    common_structure_list: dict,
+):
+    """
+    Generate a custom structural descriptor for the compounds.
+    Definition of the descriptor:
+        - "primary", "secondary", "tertiary": indicate the benzylic carbon type
+        - "N1_1", "N1_2", "N1_3": the first 1 mean the first closest nitrogen,
+        the second number indicate how many bond away from the ipso carbon
+        - "N2_1", "N2_2", "N2_3": same thing with the "N1_1", "N1_2", "N1_3"
+        - "phenyl": the core structure have only one ring
+        - "biphenyl": the core structure have two rings
+        - "ring_size": the base ring where the ipso carbon is located
+
+    Args:
+        prefixes (list): List of prefixes for the compounds.
+        all_compounds_list (dict): Dictionary containing SDF suppliers for each prefix.
+        common_structure_list (dict): Dictionary containing common structures for each prefix.
+
+    Returns:
+        pd.DataFrame: ONE DataFrame containing the custom structural descriptor for all passed molecules.
+
+    """
+    prelim_df = pd.DataFrame(
+        columns=[
+            "Compound_Name",
+            "primary",
+            "secondary",
+            "tertiary",
+            "N1_1",
+            "N1_2",
+            "N1_3",
+            "N2_1",
+            "N2_2",
+            "N2_3",
+            "phenyl",
+            "biphenyl",
+            "ring_size",
+        ]
+    )
+    for prefix in prefixes:
+        for molecule in all_compounds_list[prefix]:
+            mol_name = molecule.GetProp("_Name").split("_")[0]
+            if (
+                molecule is not None
+                and mol_name not in prelim_df["Compound_Name"].values
+            ):
+                submatches = molecule.GetSubstructMatches(
+                    common_structure_list[prefix]
+                )  # find substructure
+                global_found = False
+                benzylic_carbons = []
+                ipso_carbons = []
+                # create a dataframe with all properties initialized to None
+                temp_df = pd.DataFrame(
+                    data=[
+                        [
+                            mol_name,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                        ]
+                    ],
+                    columns=[
+                        "Compound_Name",
+                        "primary",
+                        "secondary",
+                        "tertiary",
+                        "N1_1",
+                        "N1_2",
+                        "N1_3",
+                        "N2_1",
+                        "N2_2",
+                        "N2_3",
+                        "phenyl",
+                        "biphenyl",
+                        "ring_size",
+                    ],
+                )
+                for submatch in submatches:
+                    found = False
+                    temp_matchlist = [
+                        item for item in submatch
+                    ]  # list of zero-indexed atom numbers
+                    # !this is specific to this project which is chlorination on the alkyl side chain on the substrucutre,
+                    # where we mostly care about the alkyl side chain
+                    for atom in temp_matchlist:
+                        if (
+                            molecule.GetAtomWithIdx(atom).GetSymbol() == "C"
+                        ):  # check if the atom is carbon
+                            for neighbor in molecule.GetAtomWithIdx(
+                                atom
+                            ).GetNeighbors():  # iterate through all neighbors
+                                if (
+                                    neighbor.GetSymbol() == "C"
+                                    and neighbor.GetIdx() not in temp_matchlist
+                                ):  # filter neighbor that is not carbon and is not in the temp_matchlist
+                                    if (
+                                        neighbor.GetBonds() is not None
+                                    ):  # check if there is any bond going to the neighbor
+                                        if (
+                                            neighbor.GetTotalNumHs(
+                                                includeNeighbors=True
+                                            )
+                                            >= 1
+                                        ):  # check if there is at least one hydrogen, !specific for closed shell molecules
+                                            if all(
+                                                [
+                                                    bond.GetBondType()
+                                                    == Chem.rdchem.BondType.SINGLE
+                                                    for bond in neighbor.GetBonds()
+                                                ]
+                                            ):  # check if all bonds are single bond
+                                                found = True
+                                                if not global_found:
+                                                    global_found = True
+                                                else:
+                                                    print("Warning: double match found")
+                                                    display(molecule)
+                                                # we now locate the correct ipso carbon
+                                                benzylic_carbons.append(
+                                                    neighbor.GetIdx()
+                                                )
+                                                ipso_carbons.append(atom)
+                    if found and len(benzylic_carbons) != 0 and len(ipso_carbons) != 0:
+                        # print warning if there are more than one carbon found
+                        if len(benzylic_carbons) > 1:
+                            print(
+                                "Warning: more than one benzylic carbon found, we will only use the first one"
+                            )
+                            display(molecule)
+                        if len(ipso_carbons) > 1:
+                            print(
+                                "Warning: more than one ipso carbon found, we will only use the first one"
+                            )
+                            display(molecule)
+
+                        num_Benzylic_Hs = molecule.GetAtomWithIdx(
+                            benzylic_carbons[0]
+                        ).GetTotalNumHs(includeNeighbors=True)
+                        # first query the number of hydrogen to determine the primary, secondary, tertiary
+                        if num_Benzylic_Hs == 3:
+                            temp_df["primary"] = 1
+                        elif num_Benzylic_Hs == 2:
+                            temp_df["secondary"] = 1
+                        elif num_Benzylic_Hs == 1:
+                            temp_df["tertiary"] = 1
+
+                        # perform a breadth first search limit to only the core structure atoms
+                        # cal distance to the ipso carbon when encounter a nitrogen atom
+                        first_N_distance = -1
+                        second_N_distance = -1
+                        other_N_distances = []
+                        starting_atoms_index = ipso_carbons[0]
+                        cache = [starting_atoms_index]
+                        visited = set()
+                        distance_matrix = Chem.rdmolops.GetDistanceMatrix(molecule)
+                        while len(cache) > 0:
+                            # print("----------------------------------------")
+                            # print(f"cache: {cache}")
+                            # print(f"visited: {visited}")
+                            currentAtomIndex = cache.pop(0)
+                            # print(f"currentAtomIndex: {currentAtomIndex}")
+                            if currentAtomIndex in visited:
+                                continue
+                            visited.add(currentAtomIndex)
+                            currentAtom = molecule.GetAtomWithIdx(currentAtomIndex)
+                            for neighbor in currentAtom.GetNeighbors():
+                                neighborIndex = neighbor.GetIdx()
+                                if (
+                                    neighborIndex in temp_matchlist
+                                    and neighborIndex not in visited
+                                ):
+                                    cache.append(neighborIndex)
+                            currentAtom = molecule.GetAtomWithIdx(currentAtomIndex)
+                            if currentAtom.GetSymbol() == "N":
+                                distance = int(
+                                    distance_matrix[currentAtomIndex][
+                                        starting_atoms_index
+                                    ]
+                                )
+                                if first_N_distance == -1:
+                                    first_N_distance = distance
+                                elif second_N_distance == -1:
+                                    second_N_distance = distance
+                                else:
+                                    other_N_distances.append(distance)
+
+                        # fill the dataframe based on the number of nitrogen found
+                        if first_N_distance == 1:
+                            temp_df["N1_1"] = 1
+                        elif first_N_distance == 2:
+                            temp_df["N1_2"] = 1
+                        elif first_N_distance == 3:
+                            temp_df["N1_3"] = 1
+                        if second_N_distance == 1:
+                            temp_df["N2_1"] = 1
+                        elif second_N_distance == 2:
+                            temp_df["N2_2"] = 1
+                        elif second_N_distance == 3:
+                            temp_df["N2_3"] = 1
+
+                        # determine the core structure ring size using RingInfo on the common structure
+                        # need to sanitize the molecule first
+                        Chem.rdmolops.SanitizeMol(common_structure_list[prefix])
+                        ringInfo = common_structure_list[prefix].GetRingInfo()
+                        totalNumRings = ringInfo.NumRings()
+                        if totalNumRings == 1:
+                            temp_df["phenyl"] = 1
+                        elif totalNumRings != 1:
+                            temp_df["biphenyl"] = 1
+
+                        # determine the base ring size where the ipso carbon is involved
+                        Chem.rdmolops.SanitizeMol(molecule)
+                        ringInfo = molecule.GetRingInfo()
+                        baseRingSize = ringInfo.MinAtomRingSize(starting_atoms_index)
+                        temp_df["ring_size"] = baseRingSize
+
+                if not global_found:
+                    print("Warning: no match found")
+                    display(molecule)
+
+                prelim_df = pd.concat([prelim_df, temp_df], ignore_index=True)
+
+    # reset the index
+    prelim_df = prelim_df.reset_index(drop=True)
+    display(prelim_df)
     return prelim_df
